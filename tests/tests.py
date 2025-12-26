@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -22,12 +24,15 @@ def test_1():
     password = wait.until(EC.visibility_of_element_located(PASSWORD_LOCATOR))
     login_button = wait.until(EC.element_to_be_clickable(LOGIN_LOCATOR))
 
+    username.clear()
+    password.clear()
+
     username.send_keys("standard_user")
     password.send_keys("secret_sauce")
     login_button.click()
 
-    assert driver.current_url == "https://www.saucedemo.com/inventory.html", "Проверка 1 не прошла"
-    print("Проверка 1 успешно пройдена")
+    assert driver.current_url == "https://www.saucedemo.com/inventory.html", "Тест 1 не пройден"
+    print("Тест 1 успешно пройден")
 
 def test_2():
     USERNAME_LOCATOR = ("xpath", "//input[@id='user-name']")
@@ -40,12 +45,15 @@ def test_2():
     password = wait.until(EC.visibility_of_element_located(PASSWORD_LOCATOR))
     login_button = wait.until(EC.element_to_be_clickable(LOGIN_LOCATOR))
 
+    username.clear()
+    password.clear()
+
     username.send_keys("standard-user")
     password.send_keys("secret_sauce")
     login_button.click()
 
-    assert driver.find_element("xpath", "//h3[text()='Epic sadface: Username and password do not match any user in this service']"), "Проверка 2 не прошла"
-    print("Проверка 2 успешно пройдена")
+    assert driver.find_element("xpath", "//h3[text()='Epic sadface: Username and password do not match any user in this service']"), "Тест 2 не пройден"
+    print("Тест 2 успешно пройден")
 
 def test_3():
     USERNAME_LOCATOR = ("xpath", "//input[@id='user-name']")
@@ -58,14 +66,38 @@ def test_3():
     password = wait.until(EC.visibility_of_element_located(PASSWORD_LOCATOR))
     login_button = wait.until(EC.element_to_be_clickable(LOGIN_LOCATOR))
 
+    username.clear()
+    password.clear()
+
     username.send_keys("locked_out_user")
     password.send_keys("secret_sauce")
     login_button.click()
 
-    assert driver.find_element("xpath", "//h3[text()='Epic sadface: Sorry, this user has been locked out.']"), "Проверка 3 не прошла"
-    print("Проверка 3 успешно пройдена")
+    assert driver.find_element("xpath", "//h3[text()='Epic sadface: Sorry, this user has been locked out.']"), "Тест 3 не пройден"
+    print("Тест 3 успешно пройден")
+
+def test_4():
+    USERNAME_LOCATOR = ("xpath", "//input[@id='user-name']")
+    PASSWORD_LOCATOR = ("xpath", "//input[@id='password']")
+    LOGIN_LOCATOR = ("xpath", "//input[@id='login-button']")
+
+    driver.get("https://www.saucedemo.com/")
+
+    username = wait.until(EC.visibility_of_element_located(USERNAME_LOCATOR))
+    password = wait.until(EC.visibility_of_element_located(PASSWORD_LOCATOR))
+    login_button = wait.until(EC.element_to_be_clickable(LOGIN_LOCATOR))
+
+    username.clear()
+    password.clear()
+
+    password.send_keys("secret_sauce")
+    login_button.click()
+
+    assert driver.find_element("xpath","//h3[text()='Epic sadface: Username is required']"), "Тест 4 не пройден"
+    print("Тест 4 успешно пройден")
+
 
 test_1()
 test_2()
 test_3()
-
+test_4()
