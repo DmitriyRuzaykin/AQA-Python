@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 service = Service(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
-wait = WebDriverWait(driver, 15, poll_frequency=1)
+wait = WebDriverWait(driver, 30, poll_frequency=1)
 
 def test_1():
     USERNAME_LOCATOR = ("xpath", "//input[@id='user-name']")
@@ -22,5 +22,8 @@ def test_1():
     username.send_keys("standard_user")
     password.send_keys("secret_sauce")
     login_button.click()
+
+    assert driver.current_url == "https://www.saucedemo.com/inventory.html", "Проверка 1 не прошла"
+    print("Проверка успешно пройдена")
 
 test_1()
