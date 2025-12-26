@@ -51,6 +51,7 @@ def test_2():
     login_button.click()
 
     assert driver.find_element("xpath", "//h3[text()='Epic sadface: Username and password do not match any user in this service']"), "Тест 2 не пройден"
+    assert driver.current_url == "https://www.saucedemo.com/", "Текущая страница не правильная"
     print("Тест 2 успешно пройден")
 
 def test_3():
@@ -72,6 +73,7 @@ def test_3():
     login_button.click()
 
     assert driver.find_element("xpath", "//h3[text()='Epic sadface: Sorry, this user has been locked out.']"), "Тест 3 не пройден"
+    assert driver.current_url == "https://www.saucedemo.com/", "Текущая страница не правильная"
     print("Тест 3 успешно пройден")
 
 def test_4():
@@ -92,6 +94,7 @@ def test_4():
     login_button.click()
 
     assert driver.find_element("xpath","//h3[text()='Epic sadface: Username is required']"), "Тест 4 не пройден"
+    assert driver.current_url == "https://www.saucedemo.com/", "Текущая страница не правильная"
     print("Тест 4 успешно пройден")
 
 def test_5():
