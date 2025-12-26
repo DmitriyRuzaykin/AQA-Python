@@ -1,5 +1,3 @@
-import time
-
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -96,8 +94,30 @@ def test_4():
     assert driver.find_element("xpath","//h3[text()='Epic sadface: Username is required']"), "Тест 4 не пройден"
     print("Тест 4 успешно пройден")
 
+def test_5():
+    USERNAME_LOCATOR = ("xpath", "//input[@id='user-name']")
+    PASSWORD_LOCATOR = ("xpath", "//input[@id='password']")
+    LOGIN_LOCATOR = ("xpath", "//input[@id='login-button']")
+
+    driver.get("https://www.saucedemo.com/")
+
+    username = wait.until(EC.visibility_of_element_located(USERNAME_LOCATOR))
+    password = wait.until(EC.visibility_of_element_located(PASSWORD_LOCATOR))
+    login_button = wait.until(EC.element_to_be_clickable(LOGIN_LOCATOR))
+
+    username.clear()
+    password.clear()
+
+    username.send_keys("performance_glitch_user")
+    password.send_keys("secret_sauce")
+    login_button.click()
+
+    assert driver.current_url == "https://www.saucedemo.com/inventory.html", "Тест 5 не пройден"
+    print("Тест 5 успешно пройден")
+
 
 test_1()
 test_2()
 test_3()
 test_4()
+test_5()
