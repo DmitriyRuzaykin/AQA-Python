@@ -8,16 +8,19 @@ service = Service(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
 wait = WebDriverWait(driver, 15, poll_frequency=1)
 
-USERNAME_LOCATOR = ("xpath", "//input[@id='user-name']")
-PASSWORD_LOCATOR = ("xpath", "//input[@id='password']")
-LOGIN_LOCATOR = ("xpath", "//input[@id='login-button']")
+def test_1():
+    USERNAME_LOCATOR = ("xpath", "//input[@id='user-name']")
+    PASSWORD_LOCATOR = ("xpath", "//input[@id='password']")
+    LOGIN_LOCATOR = ("xpath", "//input[@id='login-button']")
 
-driver.get("https://www.saucedemo.com/")
+    driver.get("https://www.saucedemo.com/")
 
-username = wait.until(EC.visibility_of_element_located(USERNAME_LOCATOR))
-password = wait.until(EC.visibility_of_element_located(PASSWORD_LOCATOR))
-login_button = wait.until(EC.element_to_be_clickable(LOGIN_LOCATOR))
+    username = wait.until(EC.visibility_of_element_located(USERNAME_LOCATOR))
+    password = wait.until(EC.visibility_of_element_located(PASSWORD_LOCATOR))
+    login_button = wait.until(EC.element_to_be_clickable(LOGIN_LOCATOR))
 
-username.send_keys("standard_user")
-password.send_keys("secret_sauce")
-login_button.click()
+    username.send_keys("standard_user")
+    password.send_keys("secret_sauce")
+    login_button.click()
+
+test_1()
