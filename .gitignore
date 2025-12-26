@@ -53,3 +53,9 @@ secrets.yaml
 !.env.example
 !config.example.ini
 !test_data/example_data.json
+
+
+.idea/
+*.iml
+*.ipr
+*.iws
