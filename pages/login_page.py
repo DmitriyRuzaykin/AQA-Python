@@ -2,9 +2,13 @@ from pages.base_page import BasePage
 
 class LoginPage(BasePage):
     # Локаторы
-    USERNAME_INPUT = ("xpath", "//input[@id='user-name']")
-    PASSWORD_INPUT = ("xpath", "//input[@id='password']")
-    LOGIN_BUTTON = ("xpath", "//input[@id='login-button']")
+    USERNAME_INPUT_LOCATOR = ("xpath", "//input[@id='user-name']")
+    PASSWORD_INPUT_LOCATOR = ("xpath", "//input[@id='password']")
+    LOGIN_BUTTON_LOCATOR = ("xpath", "//input[@id='login-button']")
+    WRONG_PASSWORT_LOCATOR = ("xpath", "//h3[contains(text(),'Username and password')]")
+    LOCKED_USER_LOCATOR = ("xpath", "//h3[contains(text(),'locked out')]")
+    EMPTY_FIELD_LOCATOR = ("xpath", "//h3[contains(text(),'Username is required')]")
+
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -17,21 +21,21 @@ class LoginPage(BasePage):
 
     def enter_username(self, username):
         """Ввести имя пользователя"""
-        username_field = self.find_element(self.USERNAME_INPUT)
+        username_field = self.find_element(self.USERNAME_INPUT_LOCATOR)
         username_field.clear()
         username_field.send_keys(username)
         return self
 
     def enter_password(self, password):
         """Ввести пароль"""
-        password_field = self.find_element(self.PASSWORD_INPUT)
+        password_field = self.find_element(self.PASSWORD_INPUT_LOCATOR)
         password_field.clear()
         password_field.send_keys(password)
         return self
 
     def click_login(self):
         """Нажать кнопку логина"""
-        login_btn = self.find_clickable_element(self.LOGIN_BUTTON)
+        login_btn = self.find_clickable_element(self.LOGIN_BUTTON_LOCATOR)
         login_btn.click()
 
     def login(self, username, pasword):

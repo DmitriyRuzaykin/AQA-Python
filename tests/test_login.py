@@ -30,9 +30,7 @@ def test_wrong_password(driver):
     login_page = LoginPage(driver)
     login_page.login("standard_user", "wrong_pass")
 
-    error = login_page.find_element(
-        ("xpath", "//h3[contains(text(),'Username and password')]")
-    )
+    error = login_page.find_element(login_page.WRONG_PASSWORT_LOCATOR)
 
     assert error.is_displayed()
     assert "saucedemo.com" in driver.current_url
@@ -41,9 +39,7 @@ def test_locked_user(driver):
     login_page = LoginPage(driver)
     login_page.login("locked_out_user", "secret_sauce")
 
-    error = login_page.find_element(
-        ("xpath", "//h3[contains(text(),'locked out')]")
-    )
+    error = login_page.find_element(login_page.LOCKED_USER_LOCATOR)
 
     assert error.is_displayed()
     assert "saucedemo.com" in driver.current_url
@@ -52,9 +48,7 @@ def test_empty_field(driver):
     login_page = LoginPage(driver)
     login_page.login("", "")
 
-    error = login_page.find_element(
-        ("xpath", "//h3[contains(text(),'Username is required')]")
-    )
+    error = login_page.find_element(login_page.EMPTY_FIELD_LOCATOR)
 
     assert error.is_displayed()
     assert "saucedemo.com" in driver.current_url
