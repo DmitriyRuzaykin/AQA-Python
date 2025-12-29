@@ -18,7 +18,6 @@ def setup_driver():
     return driver
 
 def test_1():
-    driver = None
 
     try:
         driver = setup_driver()
@@ -38,7 +37,6 @@ def test_1():
         traceback.print_exc()
 
 def test_2():
-    driver = None
 
     try:
         driver = setup_driver()
@@ -63,7 +61,6 @@ def test_2():
         traceback.print_exc()
 
 def test_3():
-    driver = None
 
     try:
         driver = setup_driver()
@@ -93,7 +90,6 @@ def test_3():
             driver.quit()
 
 def test_4():
-    driver = None
 
     try:
         driver = setup_driver()
@@ -122,6 +118,25 @@ def test_4():
             print("🧹 Закрываю браузер...")
             driver.quit()
 
+def test_5():
+
+    try:
+        driver = setup_driver()
+        login_page = LoginPage(driver)
+
+        print("🌐 Открываю страницу логина...")
+
+        login_page.login("performance_glitch_user", "secret_sauce")
+
+        assert "saucedemo.com/inventory.html" in driver.current_url
+
+        print("✅ ТЕСТ 5 ПРОЙДЕН! Пользователь авторизован.")
+
+    except Exception as e:
+        print(f"🔥 КРИТИЧЕСКАЯ ОШИБКА: {e}")
+        import traceback
+        traceback.print_exc()
+
 if __name__ == "__main__":
 
     test_1()
@@ -131,3 +146,5 @@ if __name__ == "__main__":
     test_3()
     print("------------")
     test_4()
+    print("------------")
+    test_5()
