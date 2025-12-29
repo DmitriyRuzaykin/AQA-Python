@@ -21,7 +21,6 @@ def test_1():
     driver = None
     try:
         driver = setup_driver()
-
         login_page = LoginPage(driver)
 
         print("🌐 Открываю страницу логина...")
@@ -32,10 +31,10 @@ def test_1():
         expected_url = "https://www.saucedemo.com/inventory.html"
 
         if current_url == expected_url:
-            print("✅ ТЕСТ ПРОЙДЕН! Пользователь успешно авторизован.")
+            print("✅ ТЕСТ 1 ПРОЙДЕН! Пользователь успешно авторизован.")
             return True
         else:
-            print("❌ ТЕСТ НЕ ПРОЙДЕН! Неверный URL после логина.")
+            print("❌ ТЕСТ 1 НЕ ПРОЙДЕН! Неверный URL после логина.")
             return False
 
     except Exception as e:
@@ -49,5 +48,43 @@ def test_1():
             print("🧹 Закрываю браузер...")
             driver.quit()
 
+def test_2():
+    driver = None
+
+    try:
+        driver = setup_driver()
+        login_page = LoginPage(driver)
+
+        print("🌐 Открываю страницу логина...")
+
+        login_page.login("standard-user", "secret_sauce")
+
+        ERROR_MESSAGE_LOCATOR = ("xpath", "//h3[text()='Epic sadface: Username and password do not match any user in this service']")
+        error_message = login_page.find_element(ERROR_MESSAGE_LOCATOR)
+
+        current_url = driver.current_url
+        expected_url = "https://www.saucedemo.com/"
+
+        if (current_url == expected_url and error_message.is_displayed()):
+            print("✅ ТЕСТ 2 ПРОЙДЕН! Пользователь не авторизован с неверным логином.")
+            return True
+        else:
+            print("❌ ТЕСТ 2 НЕ ПРОЙДЕН!")
+            return False
+
+    except Exception as e:
+        print(f"🔥 КРИТИЧЕСКАЯ ОШИБКА: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+    finally:
+        if driver:
+            print("🧹 Закрываю браузер...")
+            driver.quit()
+
+
 if __name__ == "__main__":
     test_1()
+    print("------------")
+    test_2()
