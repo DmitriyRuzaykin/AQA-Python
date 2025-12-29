@@ -35,6 +35,7 @@ def test_2(driver):
     )
 
     assert error.is_displayed()
+    assert "saucedemo.com" in driver.current_url
 
 def test_3(driver):
     login_page = LoginPage(driver)
@@ -45,6 +46,7 @@ def test_3(driver):
     )
 
     assert error.is_displayed()
+    assert "saucedemo.com" in driver.current_url
 
 def test_4(driver):
     login_page = LoginPage(driver)
@@ -55,6 +57,7 @@ def test_4(driver):
     )
 
     assert error.is_displayed()
+    assert "saucedemo.com" in driver.current_url
 
 def test_5(driver):
     login_page = LoginPage(driver)
