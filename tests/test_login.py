@@ -1,3 +1,4 @@
+import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -5,147 +6,68 @@ from selenium.webdriver.chrome.options import Options
 from pages.login_page import LoginPage
 
 
-def setup_driver():
-    """Настройка и создание драйвера"""
-    print("🔄 Настраиваю Chrome драйвер...")
+@pytest.fixture
+def driver():
+    print("\n🔄 Запуск Chrome")
 
-    chrome_options = Options()
-    chrome_options.add_argument("--incognito")
+    options = Options()
+    options.add_argument("--incognito")
 
-    service = Service(executable_path=ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
 
-    return driver
+    yield driver
+
+    print("\n🧹 Закрытие браузера")
+    driver.quit()
 
 def test_1():
-
-    try:
-        driver = setup_driver()
+    def test_login_success(driver):
         login_page = LoginPage(driver)
-
-        print("🌐 Открываю страницу логина...")
 
         login_page.login("standard_user", "secret_sauce")
 
-        assert "saucedemo.com/inventory.html" in driver.current_url
-
-        print("✅ ТЕСТ 1 ПРОЙДЕН! Пользователь авторизован.")
-
-    except Exception as e:
-        print(f"🔥 КРИТИЧЕСКАЯ ОШИБКА: {e}")
-        import traceback
-        traceback.print_exc()
-
-    finally:
-        if driver:
-            print("🧹 Закрываю браузер...")
-            driver.quit()
+        assert "inventory.html" in driver.current_url
 
 def test_2():
+    login_page = LoginPage(driver)
 
-    try:
-        driver = setup_driver()
-        login_page = LoginPage(driver)
+    login_page.login("standard_user", "wrong_password")
 
-        print("🌐 Открываю страницу логина...")
+    error = login_page.find_element(
+        ("xpath", "//h3[contains(text(),'Username and password')]")
+    )
 
-        login_page.login("standard_user", "secret-sauce")
-
-        ERROR_MESSAGE_LOCATOR = ("xpath",
-                                 "//h3[text()='Epic sadface: Username and password do not match any user in this service']")
-        error_message = login_page.find_element(ERROR_MESSAGE_LOCATOR)
-
-        assert error_message.is_displayed()
-        assert "saucedemo.com" in driver.current_url
-
-        print("✅ ТЕСТ 2 ПРОЙДЕН! Пользователь не авторизован.")
-
-    except Exception as e:
-        print(f"🔥 КРИТИЧЕСКАЯ ОШИБКА: {e}")
-        import traceback
-        traceback.print_exc()
-
-    finally:
-        if driver:
-            print("🧹 Закрываю браузер...")
-            driver.quit()
+    assert error.is_displayed()
 
 def test_3():
+    login_page = LoginPage(driver)
 
-    try:
-        driver = setup_driver()
-        login_page = LoginPage(driver)
+    login_page.login("locked_out_user", "secret_sauce")
 
-        print("🌐 Открываю страницу логина...")
+    error = login_page.find_element(
+        ("xpath", "//h3[contains(text(),'locked out')]")
+    )
 
-        login_page.login("locked_out_user", "secret_sauce")
-
-        ERROR_MESSAGE_LOCATOR = ("xpath",
-                                 "//h3[text()='Epic sadface: Sorry, this user has been locked out.']")
-        error_message = login_page.find_element(ERROR_MESSAGE_LOCATOR)
-
-        assert error_message.is_displayed()
-        assert "saucedemo.com" in driver.current_url
-
-        print("✅ ТЕСТ 3 ПРОЙДЕН! Пользователь заблокирован.")
-
-    except Exception as e:
-        print(f"🔥 КРИТИЧЕСКАЯ ОШИБКА: {e}")
-        import traceback
-        traceback.print_exc()
-
-    finally:
-        if driver:
-            print("🧹 Закрываю браузер...")
-            driver.quit()
+    assert error.is_displayed()
 
 def test_4():
+    login_page = LoginPage(driver)
 
-    try:
-        driver = setup_driver()
-        login_page = LoginPage(driver)
+    login_page.login("", "")
 
-        print("🌐 Открываю страницу логина...")
+    error = login_page.find_element(
+        ("xpath", "//h3[contains(text(),'Username is required')]")
+    )
 
-        login_page.login("", "")
-
-        ERROR_MESSAGE_LOCATOR = ("xpath",
-                                     "//h3[text()='Epic sadface: Username is required']")
-        error_message = login_page.find_element(ERROR_MESSAGE_LOCATOR)
-
-        assert error_message.is_displayed()
-        assert "saucedemo.com" in driver.current_url
-
-        print("✅ ТЕСТ 4 ПРОЙДЕН! Пользователь не авторизован.")
-
-    except Exception as e:
-        print(f"🔥 КРИТИЧЕСКАЯ ОШИБКА: {e}")
-        import traceback
-        traceback.print_exc()
-
-    finally:
-        if driver:
-            print("🧹 Закрываю браузер...")
-            driver.quit()
+    assert error.is_displayed()
 
 def test_5():
+    login_page = LoginPage(driver)
 
-    try:
-        driver = setup_driver()
-        login_page = LoginPage(driver)
+    login_page.login("performance_glitch_user", "secret_sauce")
 
-        print("🌐 Открываю страницу логина...")
-
-        login_page.login("performance_glitch_user", "secret_sauce")
-
-        assert "saucedemo.com/inventory.html" in driver.current_url
-
-        print("✅ ТЕСТ 5 ПРОЙДЕН! Пользователь авторизован.")
-
-    except Exception as e:
-        print(f"🔥 КРИТИЧЕСКАЯ ОШИБКА: {e}")
-        import traceback
-        traceback.print_exc()
+    assert "inventory.html" in driver.current_url
 
 if __name__ == "__main__":
 
