@@ -36,6 +36,11 @@ def test_1():
         import traceback
         traceback.print_exc()
 
+    finally:
+        if driver:
+            print("🧹 Закрываю браузер...")
+            driver.quit()
+
 def test_2():
 
     try:
@@ -59,6 +64,11 @@ def test_2():
         print(f"🔥 КРИТИЧЕСКАЯ ОШИБКА: {e}")
         import traceback
         traceback.print_exc()
+
+    finally:
+        if driver:
+            print("🧹 Закрываю браузер...")
+            driver.quit()
 
 def test_3():
 
