@@ -1,61 +1,52 @@
-# AQA Python Project Specific
+# === Python ===
+__pycache__/
+*.py[cod]
+.pytest_cache/
 
-# Виртуальное окружение
+# === Virtual env ===
 venv/
 .venv/
 
-# PyCharm
+# === IDE ===
 .idea/
+*.iml
 
-# Кеш Python
-__pycache__/
-*.py[cod]
-
-# Отчеты тестирования
-reports/
+# === Allure ===
 allure-results/
 allure-report/
-test-results/
-*.html
-*.xml
-*.json
 
-# Логи
+# === Test reports ===
+reports/
+test-results/
+
+# === Logs ===
 logs/
 *.log
 
-# Скриншоты для UI тестов
+# === Screenshots ===
 screenshots/
 failed_tests/
 
-# Драйверы браузеров
-webdriver/
-drivers/
+# === Drivers ===
 chromedriver.exe
 geckodriver
 msedgedriver.exe
 
-# Файлы с данными для тестов (можно хранить шаблоны)
-test_data/local_*.json
-test_data/*_secret.*
-
-# Временные файлы
+# === Temp ===
 temp/
 tmp/
 *.tmp
 
-# Конфигурация с секретами
-config_secret.ini
+# === Secrets ===
 .env
 secrets.yaml
+config_secret.ini
 
-# Примеры (оставляем в репозитории)
+# === Test data (local only) ===
+test_data/local_*.json
+test_data/*_secret.*
+
+# === Examples (keep in repo) ===
 !.env.example
 !config.example.ini
 !test_data/example_data.json
-
-
-.idea/
-*.iml
-*.ipr
-*.iws
