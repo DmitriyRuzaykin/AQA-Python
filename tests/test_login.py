@@ -21,18 +21,14 @@ def driver():
     print("\n🧹 Закрытие браузера")
     driver.quit()
 
-def test_1():
-    def test_login_success(driver):
-        login_page = LoginPage(driver)
-
-        login_page.login("standard_user", "secret_sauce")
-
-        assert "inventory.html" in driver.current_url
-
-def test_2():
+def test_1(driver):
     login_page = LoginPage(driver)
+    login_page.login("standard_user", "secret_sauce")
+    assert "inventory.html" in driver.current_url
 
-    login_page.login("standard_user", "wrong_password")
+def test_2(driver):
+    login_page = LoginPage(driver)
+    login_page.login("standard_user", "wrong_pass")
 
     error = login_page.find_element(
         ("xpath", "//h3[contains(text(),'Username and password')]")
@@ -40,9 +36,8 @@ def test_2():
 
     assert error.is_displayed()
 
-def test_3():
+def test_3(driver):
     login_page = LoginPage(driver)
-
     login_page.login("locked_out_user", "secret_sauce")
 
     error = login_page.find_element(
@@ -51,9 +46,8 @@ def test_3():
 
     assert error.is_displayed()
 
-def test_4():
+def test_4(driver):
     login_page = LoginPage(driver)
-
     login_page.login("", "")
 
     error = login_page.find_element(
@@ -62,21 +56,8 @@ def test_4():
 
     assert error.is_displayed()
 
-def test_5():
+def test_5(driver):
     login_page = LoginPage(driver)
-
     login_page.login("performance_glitch_user", "secret_sauce")
 
     assert "inventory.html" in driver.current_url
-
-if __name__ == "__main__":
-
-    test_1()
-    print("------------")
-    test_2()
-    print("------------")
-    test_3()
-    print("------------")
-    test_4()
-    print("------------")
-    test_5()
