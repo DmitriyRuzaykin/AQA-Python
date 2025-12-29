@@ -92,6 +92,35 @@ def test_3():
             print("🧹 Закрываю браузер...")
             driver.quit()
 
+def test_4():
+    driver = None
+
+    try:
+        driver = setup_driver()
+        login_page = LoginPage(driver)
+
+        print("🌐 Открываю страницу логина...")
+
+        login_page.login("", "")
+
+        ERROR_MESSAGE_LOCATOR = ("xpath",
+                                     "//h3[text()='Epic sadface: Username is required']")
+        error_message = login_page.find_element(ERROR_MESSAGE_LOCATOR)
+
+        assert error_message.is_displayed()
+        assert "saucedemo.com" in driver.current_url
+
+        print("✅ ТЕСТ 4 ПРОЙДЕН! Пользователь не авторизован.")
+
+    except Exception as e:
+        print(f"🔥 КРИТИЧЕСКАЯ ОШИБКА: {e}")
+        import traceback
+        traceback.print_exc()
+
+    finally:
+        if driver:
+            print("🧹 Закрываю браузер...")
+            driver.quit()
 
 if __name__ == "__main__":
 
@@ -100,4 +129,5 @@ if __name__ == "__main__":
     test_2()
     print("------------")
     test_3()
-
+    print("------------")
+    test_4()
