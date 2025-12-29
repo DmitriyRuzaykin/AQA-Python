@@ -21,12 +21,12 @@ def driver():
     print("\n🧹 Закрытие браузера")
     driver.quit()
 
-def test_1(driver):
+def test_successful_login(driver):
     login_page = LoginPage(driver)
     login_page.login("standard_user", "secret_sauce")
     assert "inventory.html" in driver.current_url
 
-def test_2(driver):
+def test_wrong_password(driver):
     login_page = LoginPage(driver)
     login_page.login("standard_user", "wrong_pass")
 
@@ -37,7 +37,7 @@ def test_2(driver):
     assert error.is_displayed()
     assert "saucedemo.com" in driver.current_url
 
-def test_3(driver):
+def test_locked_user(driver):
     login_page = LoginPage(driver)
     login_page.login("locked_out_user", "secret_sauce")
 
@@ -48,7 +48,7 @@ def test_3(driver):
     assert error.is_displayed()
     assert "saucedemo.com" in driver.current_url
 
-def test_4(driver):
+def test_empty_field(driver):
     login_page = LoginPage(driver)
     login_page.login("", "")
 
@@ -59,7 +59,7 @@ def test_4(driver):
     assert error.is_displayed()
     assert "saucedemo.com" in driver.current_url
 
-def test_5(driver):
+def test_with_a_delay(driver):
     login_page = LoginPage(driver)
     login_page.login("performance_glitch_user", "secret_sauce")
 
