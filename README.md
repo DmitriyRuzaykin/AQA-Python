@@ -1,12 +1,22 @@
 # Автотесты для SauceDemo
 
+У вас должны быть установлены: 
+
+Docker Desktop - для запуска через контейнер
+
+Java 8+ - для работы Allure отчётов
+
+Python 3.10+ - для локального запуска
+
+Allure Commandline - для просмотра отчетов
+
 # 1. Подготовка к запуску
 
 1.1. Клонирование репозитория
 
 ```git clone https://github.com/DmitriyRuzaykin/AQA-Python.git```
 
-2.2. Переход в директорию AQA-Python
+2.2. Переход в директорию проекта
 
 ```cd AQA-Python```
 
@@ -20,7 +30,7 @@
 
 2.2. Запустите тесты с сохранением отчета
 
-в powershell:
+Для PowerShell (Windows):
 
 ```docker run --rm -v "$(pwd)/allure-results:/app/allure-results" selenium-tests```
 
@@ -38,17 +48,21 @@
 
 3.2. Активация виртуального окружения
 
+в терминале:
+
 ```venv/Scripts/activate```
 
-3.3. Установите зависимости 
+3.3. Установка зависимостей 
 
 ```pip install -r requirements.txt```
 
 3.4 Запустите тесты
 
+Простой запуск
+
 ```pytest```
 
-Либо тест с Allure отчётом
+С Allure отчётом
 
 ```pytest --alluredir=allure-results```
 
