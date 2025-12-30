@@ -3,9 +3,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 class BasePage(object):
-    def __init__(self, driver, timeout=30):
+    def __init__(self, driver, timeout=10):
         self.driver = driver
-        self.wait = WebDriverWait(driver, timeout, poll_frequency=1)
+        self.wait = WebDriverWait(driver, timeout, poll_frequency=0.5)
 
     @allure.step("Найти элемент: {locator}")
     def find_element(self, locator):
