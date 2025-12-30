@@ -4,9 +4,6 @@ FROM python:3.10-slim
 RUN apt-get update && apt-get install -y \
     chromium \
     chromium-driver \
-    wget \
-    curl \
-    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Переменные окружения
