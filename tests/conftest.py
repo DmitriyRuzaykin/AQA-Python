@@ -1,8 +1,10 @@
 import pytest
 import allure
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 @pytest.fixture
@@ -15,7 +17,12 @@ def driver():
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
 
-    service = Service("/usr/bin/chromedriver")
+    if os.path.exists("/.dockerenv"):  # Docker
+        chromedriver_path = "/usr/bin/chromedriver"
+        service = Service(chromedriver_path)
+    else:  # Windows/Linux/Mac
+        service = Service(ChromeDriverManager().install())
+
     driver = webdriver.Chrome(service=service, options=options)
 
     yield driver
