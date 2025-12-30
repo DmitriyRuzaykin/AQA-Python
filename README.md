@@ -2,11 +2,11 @@
 
 # 1. Подготовка к запуску
 
-1.1 Клонирование репозитория
+1.1. Клонирование репозитория
 
 ```git clone https://github.com/DmitriyRuzaykin/AQA-Python.git```
 
-2.2 Переход в директорию AQA-Python
+2.2. Переход в директорию AQA-Python
 
 ```cd AQA-Python```
 
@@ -17,7 +17,6 @@
 в терминале:
 
 ```docker build -t selenium-tests .```
-
 
 2.2. Запустите тесты с сохранением отчета
 
@@ -33,18 +32,26 @@
 
 # 3. Локальный запуск (Windows)
 
-3.1. Установите зависимости (всё в терминале)
+3.1. Создание виртуального окружения
+
+```python3 -m venv venv```
+
+3.2. Активация виртуального окружения
+
+```venv/Scripts/activate```
+
+3.3. Установите зависимости 
 
 ```pip install -r requirements.txt```
 
-3.2 Запустите тесты
+3.4 Запустите тесты
 
 ```pytest```
 
-Тест с Allure отчётом
+Либо тест с Allure отчётом
 
 ```pytest --alluredir=allure-results```
 
-3.3. Просмотр отчёта
+3.5. Просмотр отчёта
 
 ```allure serve allure-results```
