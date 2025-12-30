@@ -1,3 +1,4 @@
+import allure
 from pages.base_page import BasePage
 
 class LoginPage(BasePage):
@@ -14,11 +15,13 @@ class LoginPage(BasePage):
         super().__init__(driver)
         self.url = "https://www.saucedemo.com/"
 
+    @allure.step("Открыть страницу логина")
     def open(self):
         """Открыть страницу логина"""
         self.go_to_url(self.url)
         return self
 
+    @allure.step("Ввести логин: {username}")
     def enter_username(self, username):
         """Ввести имя пользователя"""
         username_field = self.find_element(self.USERNAME_INPUT_LOCATOR)
@@ -26,6 +29,7 @@ class LoginPage(BasePage):
         username_field.send_keys(username)
         return self
 
+    @allure.step("Ввести пароль")
     def enter_password(self, password):
         """Ввести пароль"""
         password_field = self.find_element(self.PASSWORD_INPUT_LOCATOR)
@@ -33,11 +37,13 @@ class LoginPage(BasePage):
         password_field.send_keys(password)
         return self
 
+    @allure.step("Нажать кнопку Login")
     def click_login(self):
         """Нажать кнопку логина"""
         login_btn = self.find_clickable_element(self.LOGIN_BUTTON_LOCATOR)
         login_btn.click()
 
+    @allure.step("Авторизация пользователя: {username}")
     def login(self, username, pasword):
         """Цепочка действий входа"""
         self.open()
